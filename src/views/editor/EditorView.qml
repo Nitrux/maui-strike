@@ -16,7 +16,7 @@ Maui.Page
     readonly property alias count: _editorListView.count
 
     property alias currentTab : _editorListView.currentItem
-    readonly property TE.TextEditor currentEditor: currentTab ? currentTab.currentItem.editor : null
+    readonly property TE.CodeEditor currentEditor: currentTab ? currentTab.currentItem.editor : null
     property alias listView: _editorListView
     property alias model : _editorListView.contentModel
     property alias tabView : _editorListView

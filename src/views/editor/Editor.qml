@@ -17,7 +17,7 @@ Maui.SplitViewItem
 
     Maui.Controls.title: title
 
-    TE.TextEditor
+    TE.CodeEditor
     {
         id: _editor
         anchors.fill: parent
