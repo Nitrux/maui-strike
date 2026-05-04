@@ -10,8 +10,24 @@ add_compile_definitions(APP_COPYRIGHT_NOTICE="© 2022-2024 Maui Development Team
 
 project(strike VERSION ${STRIKE_VERSION})
 
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    message(FATAL_ERROR "This project supports Linux only.")
+endif()
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(CheckCXXCompilerFlag)
+if(NOT CMAKE_CROSSCOMPILING)
+    string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" _host_processor)
+    if(_host_processor MATCHES "^(x86_64|amd64)$")
+        check_cxx_compiler_flag("-march=x86-64-v3" HAS_X86_64_V3)
+        if(HAS_X86_64_V3)
+            add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-march=x86-64-v3>")
+        endif()
+    endif()
+endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -77,3 +93,14 @@ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
+
+if(NOT TARGET uninstall)
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+        IMMEDIATE
+        @ONLY)
+
+    add_custom_target(uninstall
+        COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+endif()
