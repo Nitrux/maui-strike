@@ -45,7 +45,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Widgets)
 find_package(KF6 ${REQUIRED_KF_VERSION} REQUIRED COMPONENTS I18n CoreAddons)
 
-find_package(MauiKit4 4.0.3 REQUIRED COMPONENTS FileBrowsing TextEditor Terminal)
+find_package(MauiKit4 4.0.4 REQUIRED COMPONENTS FileBrowsing TextEditor Terminal)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
